@@ -18,6 +18,17 @@ endif()
 # Find Package ************************************************************************************
 find_package(cxxopts CONFIG REQUIRED)
 
+find_path(CPR_INCLUDE_DIRS cpr/cpr.h)
+find_library(CPR_LIBRARIES cpr)
+include_directories(${CPR_INCLUDE_DIRS})
+
+find_package(CURL REQUIRED)
+include_directories(${CURL_INCLUDE_DIRS})
+
+find_package(OpenSSL REQUIRED)
+
+find_package(ZLIB REQUIRED)
+
 # get_cmake_property(_variableNames VARIABLES)
 # list (SORT _variableNames)
 # foreach (_variableName ${_variableNames})

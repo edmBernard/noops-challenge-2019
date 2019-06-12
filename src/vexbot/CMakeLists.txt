@@ -5,6 +5,6 @@ SET(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/vexbot.cpp
 )
 
-add_executable("moops-vexbot" ${SOURCES})
-target_compile_options("moops-vexbot" PRIVATE -O3)
-target_link_libraries("moops-vexbot" PRIVATE -lstdc++fs)
+add_executable("noops-vexbot" ${SOURCES})
+target_compile_options("noops-vexbot" PRIVATE -O3)
+target_link_libraries("noops-vexbot" PRIVATE -lstdc++fs)
