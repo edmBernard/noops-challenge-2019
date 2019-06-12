@@ -1,10 +1,13 @@
 
 #**************************************************************************************************
 # Set variable ************************************************************************************
-SET(SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/hexbot.cpp
+SET(SAMPLES
+  hexbot
+  hexbot-basic
 )
 
-add_executable("noops-hexbot" ${SOURCES})
-target_compile_options("noops-hexbot" PRIVATE -O3)
-target_link_libraries("noops-hexbot" PRIVATE -lstdc++fs ${CPR_LIBRARIES} ${CURL_LIBRARIES} ${OPENSSL_LIBRARIES} ZLIB::ZLIB -dl -pthread)
+foreach (SAMPLE ${SAMPLES})
+  add_executable("noops-${SAMPLE}" ${CMAKE_CURRENT_SOURCE_DIR}/${SAMPLE}.cpp)
+  target_compile_options("noops-${SAMPLE}" PRIVATE -O3)
+  target_link_libraries("noops-${SAMPLE}" PRIVATE -lstdc++fs ${CPR_LIBRARIES} ${CURL_LIBRARIES} ${OPENSSL_LIBRARIES} ZLIB::ZLIB -dl -pthread)
+endforeach(SAMPLE)
