@@ -15,10 +15,11 @@ Dependencies :
 - [cxxopts](https://github.com/jarro2783/cxxopts): Command line argument parsing
 - [json](https://github.com/nlohmann/json): Json library
 - [cpr](https://github.com/whoshuu/cpr): Python Requests in cpp (http client)
+- [opencv](https://github.com/opencv/opencv): Computer vision library
 
 They can be installed with
 ```
-./vcpkg install cxxopt nlohmann-json cpr
+./vcpkg install cxxopt nlohmann-json cpr opencv
 ```
 
 ## Compilation

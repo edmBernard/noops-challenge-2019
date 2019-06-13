@@ -16,6 +16,9 @@ endif()
 
 #**************************************************************************************************
 # Find Package ************************************************************************************
+find_package(OpenCV REQUIRED)
+find_package(X11 REQUIRED)
+
 find_package(cxxopts CONFIG REQUIRED)
 
 find_path(CPR_INCLUDE_DIRS cpr/cpr.h)
@@ -37,6 +40,9 @@ find_package(ZLIB REQUIRED)
 
 #**************************************************************************************************
 # Include *****************************************************************************************
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${X11_INCLUDE_DIR})
+
 include_directories(${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
