@@ -2,6 +2,7 @@
 #include <cxxopts.hpp>
 #include <nlohmann/json.hpp>
 #include <opencv2/opencv.hpp>
+#include <fmt/format.h>
 #include <iostream>
 #include <string>
 
@@ -44,7 +45,11 @@ int main(int argc, char *argv[]) {
       // =================================================================================================
       // Get
       auto start1 = std::chrono::high_resolution_clock::now();
-      auto r = cpr::Get(cpr::Url{noops_url + "/hexbot?count=1000&width=" + std::to_string(dim) + "&height=" + std::to_string(dim) + "&seed=FF7F50,FFD700,FF8C00"});
+      std::string path = fmt::format("{url}/hexbot?count=1000&width={width}&height={height}&seed=FF7F50,FFD700,FF8C00",
+          fmt::arg("url", noops_url),
+          fmt::arg("width", dim),
+          fmt::arg("height", dim));
+      auto r = cpr::Get(cpr::Url{path});
       std::chrono::duration<double, std::milli> elapsed1 = std::chrono::high_resolution_clock::now() - start1;
       std::cout << std::setw(40) << std::left << "processing time : get : " << elapsed1.count() << " ms\n";
 

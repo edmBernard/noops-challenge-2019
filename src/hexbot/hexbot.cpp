@@ -36,10 +36,6 @@ int main(int argc, char *argv[]) {
 
     auto r = cpr::Get(cpr::Url{noops_url + "/hexbot?count=1&width=500&height=500&seed=FF7F50,FFD700,FF8C00"});
 
-    r.status_code;            // 200
-    r.header["content-type"]; // application/json; charset=utf-8
-    r.text;                   // JSON text string
-
     std::cout << "r.status_code :" << r.status_code << std::endl;
     std::cout << "r.header :" << r.header["content-type"] << std::endl;
     std::cout << "r.text :" << r.text << std::endl;

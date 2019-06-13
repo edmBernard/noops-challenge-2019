@@ -32,6 +32,8 @@ find_package(OpenSSL REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
+find_package(fmt CONFIG REQUIRED)
+
 # get_cmake_property(_variableNames VARIABLES)
 # list (SORT _variableNames)
 # foreach (_variableName ${_variableNames})
