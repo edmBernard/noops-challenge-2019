@@ -4,6 +4,7 @@
 SET(SAMPLES
   hexbot
   hexbot-basic
+  hexbot-basic-grid
 )
 
 foreach (SAMPLE ${SAMPLES})
