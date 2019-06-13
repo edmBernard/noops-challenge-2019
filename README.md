@@ -16,10 +16,11 @@ Dependencies :
 - [json](https://github.com/nlohmann/json): Json library
 - [cpr](https://github.com/whoshuu/cpr): Python Requests in cpp (http client)
 - [opencv](https://github.com/opencv/opencv): Computer vision library
+- [fmt](https://github.com/fmtlib/fmt): String formating library
 
 They can be installed with
 ```
-./vcpkg install cxxopt nlohmann-json cpr opencv
+./vcpkg install cxxopt nlohmann-json cpr opencv fmt
 ```
 
 ## Compilation
