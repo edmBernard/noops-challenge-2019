@@ -34,9 +34,14 @@ int main(int argc, char *argv[]) {
     std::cout << "noops url : " << noops_url << std::endl;
 
     do {
+      auto start0 = std::chrono::high_resolution_clock::now();
+
       // =================================================================================================
       // Get
+      auto start1 = std::chrono::high_resolution_clock::now();
       auto r = cpr::Get(cpr::Url{noops_url + "/hexbot"});
+      std::chrono::duration<double, std::milli> elapsed1 = std::chrono::high_resolution_clock::now() - start1;
+      std::cout << std::setw(40) << std::left << "processing time : get : " << elapsed1.count() << " ms\n";
 
       if (r.status_code != 200) {
         std::cout << "Bad request : status code : " << r.status_code << std::endl;
@@ -62,6 +67,9 @@ int main(int argc, char *argv[]) {
       image.setTo(cv::Scalar(blue, green, red));
 
       cv::imshow("Hexbot View", image);
+
+      std::chrono::duration<double, std::milli> elapsed0 = std::chrono::high_resolution_clock::now() - start0;
+      std::cout << std::setw(40) << std::left << "processing time : full loop : " << elapsed0.count() << " ms\n";
 
     // loop until pressed key code is 113 (=q)
     } while (cv::waitKey(0) != 113);
