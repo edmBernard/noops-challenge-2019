@@ -6,6 +6,9 @@ My entries for noop challenge
 
 - [Hexbot](src/hexbot/README.md)
 - [Vexbot](src/vexbot/README.md)
+- [Golfbot](src/golfbot/README.md)
+- [Mazebot](src/mazebot/README.md)
+- [Polybot](src/polybot/README.md)
 
 ## Dependencies
 
