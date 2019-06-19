@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
   long x = 53;  // seed must be co prime with p*q
   for (int j = 0; j < 10; ++j) {
     for (int i = 0; i < 100; ++i) {
-      x = (x*x)%(p*q);
+      x = (x*x)%(p*q);  // Blum Blum Shub pseudorandom number generator
       std::cout << ((x%2) ? "╱" : "╲");
     }
     std::cout << std::endl;
