@@ -1,10 +1,13 @@
 
 #**************************************************************************************************
 # Set variable ************************************************************************************
-SET(SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/golfbot.cpp
+SET(SAMPLES
+  golfbot-readable
+  golfbot
 )
 
-add_executable("noops-golfbot" ${SOURCES})
-target_compile_options("noops-golfbot" PRIVATE -O3)
-target_link_libraries("noops-golfbot" PRIVATE -lstdc++fs)
+foreach (SAMPLE ${SAMPLES})
+  add_executable("noops-${SAMPLE}" ${CMAKE_CURRENT_SOURCE_DIR}/${SAMPLE}.cpp)
+  target_compile_options("noops-${SAMPLE}" PRIVATE -O3)
+  target_link_libraries("noops-${SAMPLE}" PRIVATE -pthread)
+endforeach(SAMPLE)
