@@ -2,9 +2,9 @@
 #**************************************************************************************************
 # Set variable ************************************************************************************
 SET(SAMPLES
+  golfbot
   golfbot-readable-blum
   golfbot-readable-xorshift
-  golfbot
 )
 
 foreach (SAMPLE ${SAMPLES})

@@ -3,6 +3,7 @@
 # Set variable ************************************************************************************
 SET(SAMPLES
   mazebot
+  mazebot-basic
 )
 
 foreach (SAMPLE ${SAMPLES})
