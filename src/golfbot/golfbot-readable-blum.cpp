@@ -1,7 +1,7 @@
 #include <iostream>
 
 // Blum Blum Shub
-// Golfed : int main(){for(int x=53,i=1;i<1001;x=x*x%(5651*5623),++i)std::cout<<(x%2?"╱":"╲")<<(i%100?"":"\n");}
+// Golfed : int main(){for(int x=53,i=1;i<1001;x=x*x%31775573,++i)std::cout<<(x%2?"╱":"╲")<<(i%100?"":"\n");}
 int main(int argc, char const *argv[]) {
   std::cout << "Noops Challenge 2019 - Golfbot" << std::endl;
   // ╱ : U+2571
