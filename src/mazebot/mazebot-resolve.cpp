@@ -10,6 +10,8 @@ using json = nlohmann::json;
 using Eigen::MatrixXi;
 
 std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, int x, int y, int prev) {
+  std::vector<std::pair<int, int>> direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
   // check maze boundaries
   if (x < 0 || x >= maze.rows() || y < 0 || y >= maze.cols() ) {
     return {false, {}};
@@ -19,41 +21,18 @@ std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, i
   if (value > prev+1 || value == 0 || value == -2) {
     maze(x, y) = prev+1;
 
-    {
-      auto tmp = r_pathfinder(maze, x, y+1, prev+1);
+    for (auto&& dir : direction) {
+      auto tmp = r_pathfinder(maze, x+dir.first, y+dir.second, prev+1);
       if (tmp.first == true) {
         tmp.second.push_back({x, y});
         return {true, tmp.second};
       }
     }
-    {
-      auto tmp = r_pathfinder(maze, x, y-1, prev+1);
-      if (tmp.first == true) {
-        tmp.second.push_back({x, y});
-        return {true, tmp.second};
-      }
-    }
-    {
-      auto tmp = r_pathfinder(maze, x+1, y, prev+1);
-      if (tmp.first == true) {
-        tmp.second.push_back({x, y});
-        return {true, tmp.second};
-      }
-    }
-    {
-      auto tmp = r_pathfinder(maze, x-1, y, prev+1);
-      if (tmp.first == true) {
-        tmp.second.push_back({x, y});
-        return {true, tmp.second};
-      }
-    }
-    return {false, {}};
 
   } else if (value == -3) {
     return {true, {{x, y}}};
-  } else {
-    return {false, {}};
   }
+  return {false, {}};
 }
 
 int main(int argc, char *argv[]) {
@@ -121,18 +100,8 @@ int main(int argc, char *argv[]) {
         }
       }
     }
-    std::cout << maze_map << std::endl;
 
     auto tmp = r_pathfinder(maze_map, start.first, start.second, 0);
-    std::cout << maze_map << std::endl;
-
-    std::cout << std::endl;
-    for (auto i : response["map"]) {
-      for (auto j : i.get<std::vector<std::string>>()) {
-        std::cout << j;
-      }
-      std::cout << std::endl;
-    }
 
     for (std::size_t i = 1; i < tmp.second.size() - 1; ++i) {
       response["map"][tmp.second[i].first][tmp.second[i].second] = ".";
