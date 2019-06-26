@@ -4,6 +4,7 @@
 SET(SAMPLES
   mazebot
   mazebot-basic
+  mazebot-resolve
 )
 
 foreach (SAMPLE ${SAMPLES})
