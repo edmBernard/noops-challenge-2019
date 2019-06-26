@@ -9,39 +9,39 @@
 using json = nlohmann::json;
 using Eigen::MatrixXi;
 
-std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, int x, int y) {
+std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, int x, int y, int prev) {
   // check maze boundaries
   if (x < 0 || x >= maze.rows() || y < 0 || y >= maze.cols() ) {
     return {false, {}};
   }
 
   int value = maze(x, y);
-  if (value == 0 || value == -2) {
-    maze(x, y) = 1;
+  if (value > prev+1 || value == 0 || value == -2) {
+    maze(x, y) = prev+1;
 
     {
-      auto tmp = r_pathfinder(maze, x, y+1);
+      auto tmp = r_pathfinder(maze, x, y+1, prev+1);
       if (tmp.first == true) {
         tmp.second.push_back({x, y});
         return {true, tmp.second};
       }
     }
     {
-      auto tmp = r_pathfinder(maze, x, y-1);
+      auto tmp = r_pathfinder(maze, x, y-1, prev+1);
       if (tmp.first == true) {
         tmp.second.push_back({x, y});
         return {true, tmp.second};
       }
     }
     {
-      auto tmp = r_pathfinder(maze, x+1, y);
+      auto tmp = r_pathfinder(maze, x+1, y, prev+1);
       if (tmp.first == true) {
         tmp.second.push_back({x, y});
         return {true, tmp.second};
       }
     }
     {
-      auto tmp = r_pathfinder(maze, x-1, y);
+      auto tmp = r_pathfinder(maze, x-1, y, prev+1);
       if (tmp.first == true) {
         tmp.second.push_back({x, y});
         return {true, tmp.second};
@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
     }
     std::cout << maze_map << std::endl;
 
-    auto tmp = r_pathfinder(maze_map, start.first, start.second);
+    auto tmp = r_pathfinder(maze_map, start.first, start.second, 0);
     std::cout << maze_map << std::endl;
 
     std::cout << std::endl;
