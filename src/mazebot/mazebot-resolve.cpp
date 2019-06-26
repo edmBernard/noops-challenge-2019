@@ -9,6 +9,8 @@
 using json = nlohmann::json;
 using Eigen::MatrixXi;
 
+enum TILE {SPACE=0, WALL = -1, BEGIN=-2, END=-3};
+
 std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, int x, int y, int prev) {
   std::vector<std::pair<int, int>> direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
@@ -18,7 +20,8 @@ std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, i
   }
 
   int value = maze(x, y);
-  if (value > prev+1 || value == 0 || value == -2) {
+
+  if (value > prev+1 || value == TILE::SPACE || value == TILE::BEGIN) {
     maze(x, y) = prev+1;
 
     for (auto&& dir : direction) {
@@ -29,7 +32,7 @@ std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, i
       }
     }
 
-  } else if (value == -3) {
+  } else if (value == TILE::END) {
     return {true, {{x, y}}};
   }
   return {false, {}};
@@ -79,21 +82,22 @@ int main(int argc, char *argv[]) {
     MatrixXi maze_map(ncol, nrow);
     std::pair<int, int> start(0, 0);
 
+    // dump map in json to map in matrix
     for (int i = 0; i < ncol; ++i) {
       for (int j = 0; j < nrow; ++j) {
         switch (int(response["map"][i][j].get<std::string>()[0])) {
           case 88:  // X = 88
-            maze_map(i, j) = -1;
+            maze_map(i, j) = TILE::WALL;
             break;
           case 32:  // space = 32
-            maze_map(i, j) = 0;
+            maze_map(i, j) = TILE::SPACE;
             break;
           case 65:  // A = 65
-            maze_map(i, j) = -2;
+            maze_map(i, j) = TILE::BEGIN;
             start = {i, j};
             break;
           case 66:  // B = 66
-            maze_map(i, j) = -3;
+            maze_map(i, j) = TILE::END;
             break;
           default:
             throw std::runtime_error("Unknow character");
@@ -101,8 +105,10 @@ int main(int argc, char *argv[]) {
       }
     }
 
+    // apply the recursive path finder function
     auto tmp = r_pathfinder(maze_map, start.first, start.second, 0);
 
+    // draw found path in maze with dot
     for (std::size_t i = 1; i < tmp.second.size() - 1; ++i) {
       response["map"][tmp.second[i].first][tmp.second[i].second] = ".";
     }
@@ -114,6 +120,7 @@ int main(int argc, char *argv[]) {
       }
       std::cout << std::endl;
     }
+
   } catch (const cxxopts::OptionException &e) {
     std::cout << "error parsing options: " << e.what() << std::endl;
     return 1;
