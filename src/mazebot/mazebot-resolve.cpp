@@ -7,7 +7,54 @@
 
 // for convenience
 using json = nlohmann::json;
-using Eigen::MatrixXd;
+using Eigen::MatrixXi;
+
+std::pair<bool, std::vector<std::pair<int, int>>> r_pathfinder(MatrixXi &maze, int x, int y) {
+  // check maze boundaries
+  if (x < 0 || x >= maze.rows() || y < 0 || y >= maze.cols() ) {
+    return {false, {}};
+  }
+
+  int value = maze(x, y);
+  if (value == 0 || value == -2) {
+    maze(x, y) = 1;
+
+    {
+      auto tmp = r_pathfinder(maze, x, y+1);
+      if (tmp.first == true) {
+        tmp.second.push_back({x, y});
+        return {true, tmp.second};
+      }
+    }
+    {
+      auto tmp = r_pathfinder(maze, x, y-1);
+      if (tmp.first == true) {
+        tmp.second.push_back({x, y});
+        return {true, tmp.second};
+      }
+    }
+    {
+      auto tmp = r_pathfinder(maze, x+1, y);
+      if (tmp.first == true) {
+        tmp.second.push_back({x, y});
+        return {true, tmp.second};
+      }
+    }
+    {
+      auto tmp = r_pathfinder(maze, x-1, y);
+      if (tmp.first == true) {
+        tmp.second.push_back({x, y});
+        return {true, tmp.second};
+      }
+    }
+    return {false, {}};
+
+  } else if (value == -3) {
+    return {true, {{x, y}}};
+  } else {
+    return {false, {}};
+  }
+}
 
 int main(int argc, char *argv[]) {
   try {
@@ -49,7 +96,9 @@ int main(int argc, char *argv[]) {
     int ncol = response["map"].size();
     int nrow = response["map"][0].size();
     std::cout << "Maze size: col: " << ncol << " row: " << nrow << std::endl;
-    MatrixXd maze_map(ncol, nrow);
+
+    MatrixXi maze_map(ncol, nrow);
+    std::pair<int, int> start(0, 0);
 
     for (int i = 0; i < ncol; ++i) {
       for (int j = 0; j < nrow; ++j) {
@@ -62,6 +111,7 @@ int main(int argc, char *argv[]) {
             break;
           case 65:  // A = 65
             maze_map(i, j) = -2;
+            start = {i, j};
             break;
           case 66:  // B = 66
             maze_map(i, j) = -3;
@@ -73,6 +123,28 @@ int main(int argc, char *argv[]) {
     }
     std::cout << maze_map << std::endl;
 
+    auto tmp = r_pathfinder(maze_map, start.first, start.second);
+    std::cout << maze_map << std::endl;
+
+    std::cout << std::endl;
+    for (auto i : response["map"]) {
+      for (auto j : i.get<std::vector<std::string>>()) {
+        std::cout << j;
+      }
+      std::cout << std::endl;
+    }
+
+    for (std::size_t i = 1; i < tmp.second.size() - 1; ++i) {
+      response["map"][tmp.second[i].first][tmp.second[i].second] = ".";
+    }
+
+    std::cout << std::endl;
+    for (auto i : response["map"]) {
+      for (auto j : i.get<std::vector<std::string>>()) {
+        std::cout << j;
+      }
+      std::cout << std::endl;
+    }
   } catch (const cxxopts::OptionException &e) {
     std::cout << "error parsing options: " << e.what() << std::endl;
     return 1;
