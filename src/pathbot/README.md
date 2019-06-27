@@ -1,1 +1,1 @@
-# NOOPS challenge 2019 : Vexbot
+# NOOPS challenge 2019 : Pathbot
