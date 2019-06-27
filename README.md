@@ -1,14 +1,15 @@
 # noops-challenge-2019
 
-My entries for noop challenge
+My unsubmit entry for noop challenge
 
 ## List of challenge made :
 
-- [Hexbot](src/hexbot/README.md)
-- [Vexbot](src/vexbot/README.md)
-- [Golfbot](src/golfbot/README.md)
-- [Mazebot](src/mazebot/README.md)
-- [Polybot](src/polybot/README.md)
+- [Hexbot](src/hexbot)
+- [Vexbot](src/vexbot)
+- [Golfbot](src/golfbot)
+- [Mazebot](src/mazebot)
+- [Polybot](src/polybot)
+- [Pathbot](src/pathbot)
 
 ## Dependencies
 
@@ -33,7 +34,7 @@ They can be installed with
 mkdir build
 cd build
 # configure make with vcpkg toolchain
-cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake -DBUILD_PYTHON_BINDING=ON -DBUILD_EXAMPLES=ON -DBUILD_UNIT_TESTS=ON
+cmake .. -DCMAKE_TOOLCHAIN_FILE=${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake
 make
 ```
 
